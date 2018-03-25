@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WasherDBModelStoreContainer" CdmEntityContainer="WasherDBEntities">
+    <EntitySetMapping Name="DryersDBs">
+      <EntityTypeMapping TypeName="WasherDBModel.DryersDB">
+        <MappingFragment StoreEntitySet="DryersDB">
+          <ScalarProperty Name="DryerID" ColumnName="DryerID" />
+          <ScalarProperty Name="Availability" ColumnName="Availability" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Loads">
+      <EntityTypeMapping TypeName="WasherDBModel.Load">
+        <MappingFragment StoreEntitySet="Load">
+          <ScalarProperty Name="LoadSession" ColumnName="LoadSession" />
+          <ScalarProperty Name="HSU_ID" ColumnName="HSU_ID" />
+          <ScalarProperty Name="WasherID" ColumnName="WasherID" />
+          <ScalarProperty Name="Load_Start" ColumnName="Load_Start" />
+          <ScalarProperty Name="Load_Finish" ColumnName="Load_Finish" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RatingsDBs">
+      <EntityTypeMapping TypeName="WasherDBModel.RatingsDB">
+        <MappingFragment StoreEntitySet="RatingsDB">
+          <ScalarProperty Name="Rating_ID" ColumnName="Rating_ID" />
+          <ScalarProperty Name="Rating_VAL" ColumnName="Rating_VAL" />
+          <ScalarProperty Name="WasherID" ColumnName="WasherID" />
+          <ScalarProperty Name="HSU_ID" ColumnName="HSU_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UsersDBs">
+      <EntityTypeMapping TypeName="WasherDBModel.UsersDB">
+        <MappingFragment StoreEntitySet="UsersDB">
+          <ScalarProperty Name="HSU_ID" ColumnName="HSU_ID" />
+          <ScalarProperty Name="Student_name" ColumnName="Student_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WasherDBs">
+      <EntityTypeMapping TypeName="WasherDBModel.WasherDB">
+        <MappingFragment StoreEntitySet="WasherDB">
+          <ScalarProperty Name="WasherID" ColumnName="WasherID" />
+          <ScalarProperty Name="Availability_" ColumnName="Availability " />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

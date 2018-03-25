@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WasherDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DryersDB">
+          <Key>
+            <PropertyRef Name="DryerID" />
+          </Key>
+          <Property Name="DryerID" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="Availability" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Load">
+          <Key>
+            <PropertyRef Name="LoadSession" />
+          </Key>
+          <Property Name="LoadSession" Type="int" Nullable="false" />
+          <Property Name="HSU_ID" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="WasherID" Type="int" Nullable="false" />
+          <Property Name="Load_Start" Type="time" Precision="3" Nullable="false" />
+          <Property Name="Load_Finish" Type="time" Precision="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RatingsDB">
+          <Key>
+            <PropertyRef Name="Rating_ID" />
+          </Key>
+          <Property Name="Rating_ID" Type="int" Nullable="false" />
+          <Property Name="Rating_VAL" Type="int" Nullable="false" />
+          <Property Name="WasherID" Type="int" Nullable="false" />
+          <Property Name="HSU_ID" Type="char" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersDB">
+          <Key>
+            <PropertyRef Name="HSU_ID" />
+          </Key>
+          <Property Name="HSU_ID" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="Student_name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WasherDB">
+          <Key>
+            <PropertyRef Name="WasherID" />
+          </Key>
+          <Property Name="WasherID" Type="int" Nullable="false" />
+          <Property Name="Availability " Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="HSU_IDFK">
+          <End Role="UsersDB" Type="Self.UsersDB" Multiplicity="1" />
+          <End Role="Load" Type="Self.Load" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDB">
+              <PropertyRef Name="HSU_ID" />
+            </Principal>
+            <Dependent Role="Load">
+              <PropertyRef Name="HSU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="HSUIDFK">
+          <End Role="UsersDB" Type="Self.UsersDB" Multiplicity="1" />
+          <End Role="RatingsDB" Type="Self.RatingsDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDB">
+              <PropertyRef Name="HSU_ID" />
+            </Principal>
+            <Dependent Role="RatingsDB">
+              <PropertyRef Name="HSU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Washer_FK">
+          <End Role="WasherDB" Type="Self.WasherDB" Multiplicity="1" />
+          <End Role="Load" Type="Self.Load" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WasherDB">
+              <PropertyRef Name="WasherID" />
+            </Principal>
+            <Dependent Role="Load">
+              <PropertyRef Name="WasherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WasherFK">
+          <End Role="WasherDB" Type="Self.WasherDB" Multiplicity="1" />
+          <End Role="RatingsDB" Type="Self.RatingsDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WasherDB">
+              <PropertyRef Name="WasherID" />
+            </Principal>
+            <Dependent Role="RatingsDB">
+              <PropertyRef Name="WasherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WasherDBModelStoreContainer">
+          <EntitySet Name="DryersDB" EntityType="Self.DryersDB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Load" EntityType="Self.Load" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RatingsDB" EntityType="Self.RatingsDB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersDB" EntityType="Self.UsersDB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WasherDB" EntityType="Self.WasherDB" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="HSU_IDFK" Association="Self.HSU_IDFK">
+            <End Role="UsersDB" EntitySet="UsersDB" />
+            <End Role="Load" EntitySet="Load" />
+          </AssociationSet>
+          <AssociationSet Name="HSUIDFK" Association="Self.HSUIDFK">
+            <End Role="UsersDB" EntitySet="UsersDB" />
+            <End Role="RatingsDB" EntitySet="RatingsDB" />
+          </AssociationSet>
+          <AssociationSet Name="Washer_FK" Association="Self.Washer_FK">
+            <End Role="WasherDB" EntitySet="WasherDB" />
+            <End Role="Load" EntitySet="Load" />
+          </AssociationSet>
+          <AssociationSet Name="WasherFK" Association="Self.WasherFK">
+            <End Role="WasherDB" EntitySet="WasherDB" />
+            <End Role="RatingsDB" EntitySet="RatingsDB" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WasherDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DryersDB">
+          <Key>
+            <PropertyRef Name="DryerID" />
+          </Key>
+          <Property Name="DryerID" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Availability" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Load">
+          <Key>
+            <PropertyRef Name="LoadSession" />
+          </Key>
+          <Property Name="LoadSession" Type="Int32" Nullable="false" />
+          <Property Name="HSU_ID" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="WasherID" Type="Int32" Nullable="false" />
+          <Property Name="Load_Start" Type="Time" Nullable="false" Precision="3" />
+          <Property Name="Load_Finish" Type="Time" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UsersDB" Relationship="Self.HSU_IDFK" FromRole="Load" ToRole="UsersDB" />
+          <NavigationProperty Name="WasherDB" Relationship="Self.Washer_FK" FromRole="Load" ToRole="WasherDB" />
+        </EntityType>
+        <EntityType Name="RatingsDB">
+          <Key>
+            <PropertyRef Name="Rating_ID" />
+          </Key>
+          <Property Name="Rating_ID" Type="Int32" Nullable="false" />
+          <Property Name="Rating_VAL" Type="Int32" Nullable="false" />
+          <Property Name="WasherID" Type="Int32" Nullable="false" />
+          <Property Name="HSU_ID" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UsersDB" Relationship="Self.HSUIDFK" FromRole="RatingsDB" ToRole="UsersDB" />
+          <NavigationProperty Name="WasherDB" Relationship="Self.WasherFK" FromRole="RatingsDB" ToRole="WasherDB" />
+        </EntityType>
+        <EntityType Name="UsersDB">
+          <Key>
+            <PropertyRef Name="HSU_ID" />
+          </Key>
+          <Property Name="HSU_ID" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Student_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Loads" Relationship="Self.HSU_IDFK" FromRole="UsersDB" ToRole="Load" />
+          <NavigationProperty Name="RatingsDBs" Relationship="Self.HSUIDFK" FromRole="UsersDB" ToRole="RatingsDB" />
+        </EntityType>
+        <EntityType Name="WasherDB">
+          <Key>
+            <PropertyRef Name="WasherID" />
+          </Key>
+          <Property Name="WasherID" Type="Int32" Nullable="false" />
+          <Property Name="Availability_" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Loads" Relationship="Self.Washer_FK" FromRole="WasherDB" ToRole="Load" />
+          <NavigationProperty Name="RatingsDBs" Relationship="Self.WasherFK" FromRole="WasherDB" ToRole="RatingsDB" />
+        </EntityType>
+        <Association Name="HSU_IDFK">
+          <End Role="UsersDB" Type="Self.UsersDB" Multiplicity="1" />
+          <End Role="Load" Type="Self.Load" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDB">
+              <PropertyRef Name="HSU_ID" />
+            </Principal>
+            <Dependent Role="Load">
+              <PropertyRef Name="HSU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Washer_FK">
+          <End Role="WasherDB" Type="Self.WasherDB" Multiplicity="1" />
+          <End Role="Load" Type="Self.Load" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WasherDB">
+              <PropertyRef Name="WasherID" />
+            </Principal>
+            <Dependent Role="Load">
+              <PropertyRef Name="WasherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="HSUIDFK">
+          <End Role="UsersDB" Type="Self.UsersDB" Multiplicity="1" />
+          <End Role="RatingsDB" Type="Self.RatingsDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDB">
+              <PropertyRef Name="HSU_ID" />
+            </Principal>
+            <Dependent Role="RatingsDB">
+              <PropertyRef Name="HSU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WasherFK">
+          <End Role="WasherDB" Type="Self.WasherDB" Multiplicity="1" />
+          <End Role="RatingsDB" Type="Self.RatingsDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WasherDB">
+              <PropertyRef Name="WasherID" />
+            </Principal>
+            <Dependent Role="RatingsDB">
+              <PropertyRef Name="WasherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WasherDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DryersDBs" EntityType="Self.DryersDB" />
+          <EntitySet Name="Loads" EntityType="Self.Load" />
+          <EntitySet Name="RatingsDBs" EntityType="Self.RatingsDB" />
+          <EntitySet Name="UsersDBs" EntityType="Self.UsersDB" />
+          <EntitySet Name="WasherDBs" EntityType="Self.WasherDB" />
+          <AssociationSet Name="HSU_IDFK" Association="Self.HSU_IDFK">
+            <End Role="UsersDB" EntitySet="UsersDBs" />
+            <End Role="Load" EntitySet="Loads" />
+          </AssociationSet>
+          <AssociationSet Name="Washer_FK" Association="Self.Washer_FK">
+            <End Role="WasherDB" EntitySet="WasherDBs" />
+            <End Role="Load" EntitySet="Loads" />
+          </AssociationSet>
+          <AssociationSet Name="HSUIDFK" Association="Self.HSUIDFK">
+            <End Role="UsersDB" EntitySet="UsersDBs" />
+            <End Role="RatingsDB" EntitySet="RatingsDBs" />
+          </AssociationSet>
+          <AssociationSet Name="WasherFK" Association="Self.WasherFK">
+            <End Role="WasherDB" EntitySet="WasherDBs" />
+            <End Role="RatingsDB" EntitySet="RatingsDBs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WasherDBModelStoreContainer" CdmEntityContainer="WasherDBEntities">
+          <EntitySetMapping Name="DryersDBs">
+            <EntityTypeMapping TypeName="WasherDBModel.DryersDB">
+              <MappingFragment StoreEntitySet="DryersDB">
+                <ScalarProperty Name="DryerID" ColumnName="DryerID" />
+                <ScalarProperty Name="Availability" ColumnName="Availability" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Loads">
+            <EntityTypeMapping TypeName="WasherDBModel.Load">
+              <MappingFragment StoreEntitySet="Load">
+                <ScalarProperty Name="LoadSession" ColumnName="LoadSession" />
+                <ScalarProperty Name="HSU_ID" ColumnName="HSU_ID" />
+                <ScalarProperty Name="WasherID" ColumnName="WasherID" />
+                <ScalarProperty Name="Load_Start" ColumnName="Load_Start" />
+                <ScalarProperty Name="Load_Finish" ColumnName="Load_Finish" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RatingsDBs">
+            <EntityTypeMapping TypeName="WasherDBModel.RatingsDB">
+              <MappingFragment StoreEntitySet="RatingsDB">
+                <ScalarProperty Name="Rating_ID" ColumnName="Rating_ID" />
+                <ScalarProperty Name="Rating_VAL" ColumnName="Rating_VAL" />
+                <ScalarProperty Name="WasherID" ColumnName="WasherID" />
+                <ScalarProperty Name="HSU_ID" ColumnName="HSU_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersDBs">
+            <EntityTypeMapping TypeName="WasherDBModel.UsersDB">
+              <MappingFragment StoreEntitySet="UsersDB">
+                <ScalarProperty Name="HSU_ID" ColumnName="HSU_ID" />
+                <ScalarProperty Name="Student_name" ColumnName="Student_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WasherDBs">
+            <EntityTypeMapping TypeName="WasherDBModel.WasherDB">
+              <MappingFragment StoreEntitySet="WasherDB">
+                <ScalarProperty Name="WasherID" ColumnName="WasherID" />
+                <ScalarProperty Name="Availability_" ColumnName="Availability " />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,40 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="900">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="493*"/>
+            <ColumnDefinition Width="399*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="Washers" HorizontalAlignment="Left" Height="327" Margin="46,10,0,0" VerticalAlignment="Top" Width="344">
+
+            <!-- Font Color/Style of Column Headings for Washer table-->
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridColumnHeader}" >
+                    <Setter Property="Background" Value="ForestGreen" />
+                    <Setter Property="FontWeight" Value="SemiBold" />
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="BorderThickness" Value="0,0,1,2" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </DataGrid.Resources>
+
+            <!-- Header Titles for our Washer table-->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Washer ID"  Binding="{Binding WasherID}" Width="150"/>
+                <DataGridTextColumn Header="Availability" Binding="{Binding Availability}" Width="*" />
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <!-- Header Titles for our Dryer table-->
+        <ComboBox x:Name="LocationDM" HorizontalAlignment="Left" Margin="46,367,0,0" VerticalAlignment="Top" Width="174" Height="35"/>
+        
+
+    </Grid>
+</Window>

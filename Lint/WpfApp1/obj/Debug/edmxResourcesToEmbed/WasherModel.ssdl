@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WasherDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DryersDB">
+    <Key>
+      <PropertyRef Name="DryerID" />
+    </Key>
+    <Property Name="DryerID" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="Availability" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Load">
+    <Key>
+      <PropertyRef Name="LoadSession" />
+    </Key>
+    <Property Name="LoadSession" Type="int" Nullable="false" />
+    <Property Name="HSU_ID" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="WasherID" Type="int" Nullable="false" />
+    <Property Name="Load_Start" Type="time" Precision="3" Nullable="false" />
+    <Property Name="Load_Finish" Type="time" Precision="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RatingsDB">
+    <Key>
+      <PropertyRef Name="Rating_ID" />
+    </Key>
+    <Property Name="Rating_ID" Type="int" Nullable="false" />
+    <Property Name="Rating_VAL" Type="int" Nullable="false" />
+    <Property Name="WasherID" Type="int" Nullable="false" />
+    <Property Name="HSU_ID" Type="char" MaxLength="4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersDB">
+    <Key>
+      <PropertyRef Name="HSU_ID" />
+    </Key>
+    <Property Name="HSU_ID" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="Student_name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WasherDB">
+    <Key>
+      <PropertyRef Name="WasherID" />
+    </Key>
+    <Property Name="WasherID" Type="int" Nullable="false" />
+    <Property Name="Availability " Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="HSU_IDFK">
+    <End Role="UsersDB" Type="Self.UsersDB" Multiplicity="1" />
+    <End Role="Load" Type="Self.Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UsersDB">
+        <PropertyRef Name="HSU_ID" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="HSU_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HSUIDFK">
+    <End Role="UsersDB" Type="Self.UsersDB" Multiplicity="1" />
+    <End Role="RatingsDB" Type="Self.RatingsDB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UsersDB">
+        <PropertyRef Name="HSU_ID" />
+      </Principal>
+      <Dependent Role="RatingsDB">
+        <PropertyRef Name="HSU_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Washer_FK">
+    <End Role="WasherDB" Type="Self.WasherDB" Multiplicity="1" />
+    <End Role="Load" Type="Self.Load" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WasherDB">
+        <PropertyRef Name="WasherID" />
+      </Principal>
+      <Dependent Role="Load">
+        <PropertyRef Name="WasherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="WasherFK">
+    <End Role="WasherDB" Type="Self.WasherDB" Multiplicity="1" />
+    <End Role="RatingsDB" Type="Self.RatingsDB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WasherDB">
+        <PropertyRef Name="WasherID" />
+      </Principal>
+      <Dependent Role="RatingsDB">
+        <PropertyRef Name="WasherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WasherDBModelStoreContainer">
+    <EntitySet Name="DryersDB" EntityType="Self.DryersDB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Load" EntityType="Self.Load" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RatingsDB" EntityType="Self.RatingsDB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsersDB" EntityType="Self.UsersDB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WasherDB" EntityType="Self.WasherDB" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="HSU_IDFK" Association="Self.HSU_IDFK">
+      <End Role="UsersDB" EntitySet="UsersDB" />
+      <End Role="Load" EntitySet="Load" />
+    </AssociationSet>
+    <AssociationSet Name="HSUIDFK" Association="Self.HSUIDFK">
+      <End Role="UsersDB" EntitySet="UsersDB" />
+      <End Role="RatingsDB" EntitySet="RatingsDB" />
+    </AssociationSet>
+    <AssociationSet Name="Washer_FK" Association="Self.Washer_FK">
+      <End Role="WasherDB" EntitySet="WasherDB" />
+      <End Role="Load" EntitySet="Load" />
+    </AssociationSet>
+    <AssociationSet Name="WasherFK" Association="Self.WasherFK">
+      <End Role="WasherDB" EntitySet="WasherDB" />
+      <End Role="RatingsDB" EntitySet="RatingsDB" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
